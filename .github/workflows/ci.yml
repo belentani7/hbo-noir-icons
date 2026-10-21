@@ -1,0 +1,33 @@
+name: BELENTANI Neural Icons — Product gates
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main, "release/**"]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    name: Real SVG export / private data guard / TypeScript / Vite
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+      - name: Reproducible installation
+        run: npm ci --no-audit --no-fund
+      - name: Product regression contracts
+        run: npm test
+      - name: Strict TypeScript contract
+        run: npm run lint
+      - name: Production site bundle
+        run: npm run build
+      - name: Check generated website assets
+        run: |
+          test -s dist/index.html
+          test -s src/services/iconExport.ts
+          test -s api/icon-brief.ts
