@@ -108,17 +108,21 @@ export type LightingMode =
   | 'ultra-noir-3'
   | 'noir-6'
   | 'noir-12'
-  | 'plasma-full';
+  | 'plasma-full'
+  | 'hbo-noir'
+  | 'liquid-bloom';
 
 /** Vistas principales de la aplicacion. */
 export type AppViewVersion =
   | 'cascade-3d'
   | 'smartwatch'
   | 'netflix'
-  | 'zero-text';
+  | 'zero-text'
+  | 'smartwatch-cascade'
+  | 'netflix-grand';
 
 /** Modo de cascada de Apple (haptics + transiciones). */
-export type AppleCascadeMode = 'off' | 'subtle' | 'cinematic';
+export type AppleCascadeMode = 'off' | 'subtle' | 'cinematic' | 'wallet-stack' | 'cover-flow' | 'cylinder-crown';
 /** Categoria de una regla del motor de restricciones de diseno. */
 export interface RuleCategory {
   /** Identificador corto usado como clave y en las comparaciones. */
