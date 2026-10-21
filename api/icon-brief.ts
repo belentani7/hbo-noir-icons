@@ -17,7 +17,10 @@ function send(res: ServerResponse, code: number, payload: object) {
 }
 
 async function bodyOf(req: VercelRequest): Promise<unknown> {
-  if (req.body !== undefined) return req.body;
+  if (req.body !== undefined) {
+    if (JSON.stringify(req.body).length > MAX_BODY) throw new Error("oversized");
+    return req.body;
+  }
   const chunks: Buffer[] = [];
   let size = 0;
   for await (const chunk of req) {
