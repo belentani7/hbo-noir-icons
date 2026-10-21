@@ -90,7 +90,35 @@ export default function App() {
 
       {/* ─── 4. Active Experience Version Switcher ─── */}
       <div className="relative z-10 w-full h-full">
-        {viewVersion === 'cascade-3d' ? (
+        {repositories.length === 0 ? (
+          <section className="flex h-full min-h-[460px] w-full items-center justify-center p-6" aria-labelledby="empty-catalog-title">
+            <div className="max-w-2xl rounded-[34px] border border-purple-300/25 bg-black/85 p-7 text-center shadow-[0_30px_95px_#000] sm:p-12">
+              <p className="font-mono text-[11px] tracking-[.25em] text-purple-300">BELENTANI / NEURAL ICONS / DATA REAL</p>
+              <h1 id="empty-catalog-title" className="mt-7 text-3xl font-light tracking-tight text-white sm:text-5xl">
+                Un universo que se dibuja con datos verificados.
+              </h1>
+              <p className="mx-auto mt-6 max-w-lg text-sm leading-8 text-purple-100/65">
+                {syncState.isLoading
+                  ? 'Consultando el catálogo público de GitHub sin credenciales privadas.'
+                  : 'GitHub no ha devuelto repositorios públicos accesibles en esta sesión. Los repositorios privados nunca se incorporan al sitio ni se simulan métricas de publicación.'}
+              </p>
+              <div className="mt-8 flex flex-wrap justify-center gap-3">
+                <button type="button" onClick={() => setShowStudioWorkbench(true)}
+                  className="min-h-11 rounded-xl border border-purple-300/55 bg-purple-500/25 px-5 py-3 text-xs font-semibold text-white hover:bg-purple-500/40">
+                  Abrir laboratorio de iconos →
+                </button>
+                <button type="button" disabled={syncState.isLoading}
+                  onClick={() => void gitHubSync.syncWithGitHub(false)}
+                  className="min-h-11 rounded-xl border border-purple-500/20 px-5 py-3 text-xs text-purple-100 hover:bg-white/10 disabled:opacity-40">
+                  Actualizar repositorios públicos
+                </button>
+              </div>
+              <p className="mt-8 font-mono text-[10px] tracking-wider text-purple-200/50">
+                REAL STATUS / PUBLIC GITHUB API · PRIVATE DATA PROTECTED
+              </p>
+            </div>
+          </section>
+        ) : viewVersion === 'cascade-3d' ? (
           <Cascade3DStream
             repositories={repositories}
             lightingMode={lightingMode}
