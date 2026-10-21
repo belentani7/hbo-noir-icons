@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
+import { downloadIconSvg, renderIconSvg } from '../services/iconExport';
 import { Repository, LightingMode } from '../types';
 import { RepoIcon } from './RepoIcon';
 import { X, Copy, Check, Sparkles, Sliders, ExternalLink, ShieldCheck, Download } from 'lucide-react';
@@ -20,37 +21,34 @@ export const IconStudioModal: React.FC<IconStudioModalProps> = ({
   const [copied, setCopied] = useState<string | null>(null);
   const [puffIntensity, setPuffIntensity] = useState<number>(85);
   const [haloGlow, setHaloGlow] = useState<number>(65);
+  const previewRef = useRef<HTMLDivElement>(null);
 
   if (!repo) return null;
 
-  const handleCopySvg = () => {
-    // Generate full standalone SVG string for export
-    const svgCode = `<!-- Belentani Neural Core Icon: ${repo.name} -->
-<!-- Style: HBO Max Noir Purple · Thick Liquid Glass -->
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="240" height="240">
-  <defs>
-    <radialGradient id="bg-dark" cx="50%" cy="50%" r="50%">
-      <stop offset="0%" stop-color="#090314" />
-      <stop offset="100%" stop-color="#010003" />
-    </radialGradient>
-    <filter id="halo-glow" x="-40%" y="-40%" width="180%" height="180%">
-      <feGaussianBlur stdDeviation="${(haloGlow / 15).toFixed(1)}" result="blur" />
-      <feMerge>
-        <feMergeNode in="blur" />
-        <feMergeNode in="SourceGraphic" />
-      </feMerge>
-    </filter>
-  </defs>
-  <rect width="120" height="120" rx="32" fill="url(#bg-dark)" stroke="${repo.iconConfig.accentColor}" stroke-width="1.5" filter="url(#halo-glow)" />
-  <!-- Glyph: ${repo.iconConfig.glyphType} -->
-  <g transform="translate(10, 10)">
-    <!-- Procedural geometry rendered for ${repo.name} -->
-  </g>
-</svg>`;
+  const makeSvg = () => {
+    const svg = previewRef.current?.querySelector('svg');
+    if (!repo || !svg) return null;
+    return renderIconSvg(svg, repo.name, repo.iconConfig.accentColor, haloGlow);
+  };
 
-    navigator.clipboard.writeText(svgCode);
-    setCopied('svg');
-    setTimeout(() => setCopied(null), 2500);
+  const handleCopySvg = async () => {
+    const svg = makeSvg();
+    if (!svg) { setCopied('error'); return; }
+    try {
+      await navigator.clipboard.writeText(svg);
+      setCopied('svg');
+      window.setTimeout(() => setCopied(null), 2500);
+    } catch {
+      setCopied('error');
+    }
+  };
+
+  const handleDownloadSvg = () => {
+    const svg = makeSvg();
+    if (!svg) { setCopied('error'); return; }
+    downloadIconSvg(svg, repo.name);
+    setCopied('download');
+    window.setTimeout(() => setCopied(null), 2500);
   };
 
   const handleCopyCss = () => {
@@ -136,7 +134,7 @@ export const IconStudioModal: React.FC<IconStudioModalProps> = ({
               />
 
               {/* Ultra-HD Master Icon */}
-              <div className="relative z-10 py-4">
+              <div ref={previewRef} className="relative z-10 py-4">
                 <RepoIcon
                   glyphType={repo.iconConfig.glyphType}
                   name={repo.name}
@@ -152,7 +150,7 @@ export const IconStudioModal: React.FC<IconStudioModalProps> = ({
               <div className="mt-4 flex items-center gap-2 font-mono text-[10px] text-purple-300/70 tracking-widest uppercase">
                 <span>GLYPH: {repo.iconConfig.glyphType}</span>
                 <span>·</span>
-                <span>HBO NOIR 60FPS</span>
+                <span>SVG VECTOR ORIGINAL</span>
               </div>
             </div>
 
@@ -170,7 +168,7 @@ export const IconStudioModal: React.FC<IconStudioModalProps> = ({
 
               {/* Feature vectors */}
               <div className="flex flex-wrap gap-1.5">
-                {repo.iconConfig.features.map((feat, idx) => (
+                {(repo.iconConfig.features ?? []).map((feat, idx) => (
                   <span
                     key={idx}
                     className="font-mono text-[10px] px-2.5 py-1 rounded-lg bg-purple-950/40 border border-purple-400/20 text-purple-200/90"
@@ -270,6 +268,15 @@ export const IconStudioModal: React.FC<IconStudioModalProps> = ({
                     </>
                   )}
                 </button>
+                <button
+                  type="button"
+                  onClick={handleDownloadSvg}
+                  className="col-span-2 flex items-center justify-center gap-2 rounded-2xl bg-purple-600/20 hover:bg-purple-600/35 border border-purple-400/35 py-3 px-4 font-mono text-xs text-purple-100"
+                >
+                  <Download className="w-4 h-4" />
+                  <span>{copied === 'download' ? 'SVG 1024×1024 descargado' : 'Descargar icono SVG real'}</span>
+                </button>
+                {copied === 'error' && <p role="alert" className="col-span-2 text-xs text-rose-300">No se pudo copiar o generar el vector. Vuelve a intentarlo.</p>}
               </div>
 
               {/* GitHub Link */}
