@@ -737,7 +737,7 @@ export const DevOpsCliBackend: React.FC<DevOpsCliBackendProps> = ({
           <div className="bg-black/70 p-3 rounded-xl border border-purple-500/30 space-y-1.5 text-[11px]">
             <div className="text-white font-bold">Estado General del Ecosistema GitHub:</div>
             <div>• Repositorios Analizados: <span className="text-emerald-400 font-bold">{syncState.repositories.length}</span></div>
-            <div>• Webs Desplegadas Activas: <span className="text-emerald-400 font-bold">{syncState.activeWebsCount}</span></div>
+            <div>• URLs de web declaradas: <span className="text-emerald-400 font-bold">{syncState.activeWebsCount}</span></div>
             <div>• Modal de Doctor Fix desplegado en pantalla con herramientas de auto-reparación y workflows listos.</div>
           </div>
         </div>
