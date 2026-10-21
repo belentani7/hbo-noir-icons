@@ -42,3 +42,17 @@ test("catalog source and unavailable sync appear in the product, not only docs",
   assert.match(app,/sin acceso a repos privados/);
   assert.match(app,/syncState\.lastError/);
 });
+
+test("Doctor Fix offers reviewable previews, not broken generators or Github writes",()=>{
+  const modal=source("src/components/DoctorFixModal.tsx");
+  const previews=source("src/services/doctorFixPreviews.ts");
+  for(const name of [
+    "generatePagesWorkflow","generatePhalanxWorkflow","generateSecurityPolicy",
+    "generateReadme","generatePythonDoctorScript","generateGhCliCommands"
+  ]) assert.match(previews,new RegExp("static " + name + "\\("));
+  assert.match(modal,/services\/doctorFixPreviews/);
+  assert.doesNotMatch(modal,/diag\.healthScore/);
+  assert.match(modal,/diag\.severity/);
+  assert.match(previews,/workflow_dispatch/);
+  assert.doesNotMatch(previews,/git push|gh repo delete|gh pr merge/);
+});
