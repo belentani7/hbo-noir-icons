@@ -31,7 +31,7 @@ export interface BelentaniProfileState {
   avatarUrl: string;
   bio: string;
   publicReposCount: number;
-  /** Numero de repositorios con web publicada y viva. */
+  /** Numero que declara una URL homepage en GitHub (sin comprobacion de vida). */
   activeWebsCount: number;
   repositories: Repository[];
   /** Diagnosticos indexados por id de repositorio. */
@@ -130,6 +130,7 @@ class GitHubSync {
         tags: (r.topics ?? []).map((t) => ({ id: t, label: t.replace(/-/g, ' ') })),
         stats: { stars: r.stargazers_count, forks: r.forks_count },
         iconConfig: {
+          features: [],
           glyphType: 'orb',
           symbolDescription: r.name,
           accentColor: '#8b8b8b',
