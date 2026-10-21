@@ -1,5 +1,5 @@
 import React from 'react';
-import { LightingMode, RepoCategory } from '../types';
+import { LightingMode } from '../types';
 import { Sparkles, Moon, Flame, Sun, Search, BookOpen, Globe, Shield, Terminal, Volume2, Stethoscope, RefreshCw } from 'lucide-react';
 
 interface HudHeaderProps {
@@ -168,10 +168,10 @@ export const HudHeader: React.FC<HudHeaderProps> = ({
                 ? 'bg-emerald-600/50 text-white border border-emerald-300 shadow-[0_0_20px_rgba(16,185,129,0.5)]'
                 : 'bg-emerald-950/40 text-emerald-300/80 border border-emerald-500/30 hover:border-emerald-300'
             }`}
-            title="Mostrar únicamente las aplicaciones y webs desplegadas en vivo"
+            title="Filtrar repositorios con URL de web declarada en GitHub, sin comprobar si responde"
           >
             <Globe className="w-3.5 h-3.5 text-emerald-400 animate-pulse" />
-            <span>🌐 WEBS EN VIVO ({activeWebsCount})</span>
+            <span>🌐 URLS DECLARADAS ({activeWebsCount})</span>
           </button>
 
           <button
