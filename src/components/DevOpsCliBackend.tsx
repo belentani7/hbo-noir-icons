@@ -71,8 +71,7 @@ export const DevOpsCliBackend: React.FC<DevOpsCliBackendProps> = ({
   const [commandHistory, setCommandHistory] = useState<string[]>([]);
   const [historyIndex, setHistoryIndex] = useState<number>(-1);
   const [isMaximized, setIsMaximized] = useState<boolean>(false);
-  const [autoUpdateCount, setAutoUpdateCount] = useState<number>(148);
-  const [lastSyncTime, setLastSyncTime] = useState<string>(new Date().toLocaleTimeString());
+  const [publicState, setPublicState] = useState(() => gitHubSync.getState());
   const [isSyncing, setIsSyncing] = useState<boolean>(false);
 
   const terminalEndRef = useRef<HTMLDivElement>(null);
@@ -87,11 +86,11 @@ export const DevOpsCliBackend: React.FC<DevOpsCliBackendProps> = ({
             ════════════════════════════════════════════════════════════════════
           </div>
           <div className="text-white font-bold flex items-center justify-between">
-            <span>⚡ BELENTANI NOIACORE BACKEND CLI v5.2 [PHALANX SHIELD HARDENED]</span>
-            <span className="text-emerald-400 text-[10px] font-bold">SHA-256 VERIFIED</span>
+            <span>⚡ BELENTANI NOIR CONSOLE · INTERFAZ GUIADA</span>
+            <span className="text-emerald-400 text-[10px] font-bold">SIN VERIFICACIÓN CRIPTOGRÁFICA</span>
           </div>
           <div className="text-purple-300/80 text-[11px]">
-            Node: Europe-West2 · Protocol: tRPC 11.2 · Lux: 3.00% CLAMPED · Sound: Apple Haptic Audio ON
+            Frontend React local · Consultas API pública GitHub · Sin shell/servidor remoto
           </div>
           <div className="text-purple-400 font-bold tracking-wider">
             ════════════════════════════════════════════════════════════════════
@@ -104,15 +103,8 @@ export const DevOpsCliBackend: React.FC<DevOpsCliBackendProps> = ({
     },
   ]);
 
-  // Real-time automatic background updates ticker
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setAutoUpdateCount((prev) => prev + 1);
-      setLastSyncTime(new Date().toLocaleTimeString());
-    }, 4500);
-
-    return () => clearInterval(interval);
-  }, []);
+  // Real subscription: counters move only when an actual GitHub fetch succeeds.
+  useEffect(() => gitHubSync.subscribe(setPublicState), []);
 
   // Focus input when opened
   useEffect(() => {
@@ -688,15 +680,16 @@ export const DevOpsCliBackend: React.FC<DevOpsCliBackendProps> = ({
         <div className="space-y-2 text-xs font-mono text-purple-200/90 pl-2 border-l border-emerald-500/40 my-2">
           <div className="text-emerald-400 font-bold flex items-center gap-2">
             <Activity className="w-3.5 h-3.5 animate-pulse" />
-            <span>ESTADO DEL SISTEMA: ACTIVO (200 OK)</span>
+            <span>ESTADO: CONSULTA PÚBLICA / NO ES UN SERVIDOR</span>
           </div>
           <div className="grid grid-cols-2 gap-2 text-[11px] bg-purple-950/20 p-2.5 rounded-lg border border-purple-500/20">
-            <div>Uptime: <span className="text-white font-bold">99.99%</span></div>
-            <div>FPS en caliente: <span className="text-emerald-400 font-bold">60.0 FPS</span></div>
-            <div>Auto-Syncs: <span className="text-white font-bold">{autoUpdateCount}</span></div>
-            <div>Luminancia fotométrica: <span className="text-purple-300 font-bold">2.98% / 3.00%</span></div>
-            <div>Haptic Audio: <span className="text-white font-bold">Web Audio API (Activo)</span></div>
-            <div>Proyectos sincronizados: <span className="text-emerald-400 font-bold">14 / 14</span></div>
+            <div>Origen de catálogo: <span className="text-white font-bold">{publicState.catalogueSource === 'public-github' ? 'GitHub público' : 'Editorial local'}</span></div>
+            <div>Repos públicos declarados: <span className="text-emerald-400 font-bold">{publicState.publicReposCount}</span></div>
+            <div>Fichas disponibles: <span className="text-white font-bold">{publicState.repositories.length}</span></div>
+            <div>Homepages declaradas: <span className="text-white font-bold">{publicState.activeWebsCount} (no verificadas)</span></div>
+            <div>Última consulta confirmada: <span className="text-white font-bold">{publicState.lastSyncTime ? new Date(publicState.lastSyncTime).toLocaleString('es-ES') : 'No disponible'}</span></div>
+            <div>Consulta en progreso: <span className="text-white font-bold">{publicState.isLoading ? 'Sí' : 'No'}</span></div>
+            {publicState.lastError && <div className="col-span-2 text-amber-200">{publicState.lastError}</div>}
           </div>
         </div>
       );
@@ -706,19 +699,19 @@ export const DevOpsCliBackend: React.FC<DevOpsCliBackendProps> = ({
     else if (mainCmd === 'sync' || mainCmd === 'fetch') {
       setIsSyncing(true);
       appleHaptics.playCrownTick(1.2);
-      gitHubSync.syncWithGitHub(true);
+      void gitHubSync.syncWithGitHub(true).finally(() => setIsSyncing(false));
       outputNode = (
         <div className="text-xs font-mono text-purple-300 pl-2 border-l border-purple-500/30 my-2">
           <div className="flex items-center gap-2 text-emerald-400">
             <RefreshCw className="w-3.5 h-3.5 animate-spin" />
-            <span>[DAEMON] Sincronizando con GitHub API @belentani7 en caliente...</span>
+            <span>Solicitud de consulta pública a GitHub emitida; no incluye repos privados.</span>
           </div>
           <div className="text-[11px] text-neutral-300 mt-1">
-            ✓ Repositorios sincronizados directamente contra la API pública de GitHub.
+            Resultado pendiente: comprueba el comando status cuando termine. No se confirma éxito anticipadamente.
           </div>
         </div>
       );
-      setTimeout(() => setIsSyncing(false), 800);
+      // La petición marca su fin de forma asíncrona al resolver, no por temporizador.
     }
 
     // ── 25B. DOCTOR FIX COMMAND ──
@@ -737,7 +730,7 @@ export const DevOpsCliBackend: React.FC<DevOpsCliBackendProps> = ({
           <div className="bg-black/70 p-3 rounded-xl border border-purple-500/30 space-y-1.5 text-[11px]">
             <div className="text-white font-bold">Estado General del Ecosistema GitHub:</div>
             <div>• Repositorios Analizados: <span className="text-emerald-400 font-bold">{syncState.repositories.length}</span></div>
-            <div>• Webs Desplegadas Activas: <span className="text-emerald-400 font-bold">{syncState.activeWebsCount}</span></div>
+            <div>• Homepages declaradas (sin comprobar uptime): <span className="text-emerald-400 font-bold">{syncState.activeWebsCount}</span></div>
             <div>• Modal de Doctor Fix desplegado en pantalla con herramientas de auto-reparación y workflows listos.</div>
           </div>
         </div>
