@@ -219,7 +219,7 @@ export const DoctorFixModal: React.FC<DoctorFixModalProps> = ({
             <div className="flex items-center gap-3 text-[11px] text-neutral-400">
               <span className="flex items-center gap-1.5 text-emerald-400 font-bold">
                 <Globe className="w-3.5 h-3.5" />
-                <span>{syncState.activeWebsCount} Webs Desplegadas Activas</span>
+                <span>{syncState.activeWebsCount} URLs de web declaradas</span>
               </span>
               <span className="text-neutral-600">·</span>
               <span>{syncState.publicReposCount} Repositorios</span>
@@ -294,7 +294,7 @@ export const DoctorFixModal: React.FC<DoctorFixModalProps> = ({
                       }`}
                     >
                       <Globe className="w-3 h-3 text-emerald-400" />
-                      <span>Solo Webs Desplegadas ({syncState.activeWebsCount})</span>
+                      <span>Solo URLs declaradas ({syncState.activeWebsCount})</span>
                     </button>
                     <button
                       onClick={() => setFilterMode('needs-attention')}
