@@ -24,7 +24,7 @@ import {
 } from 'lucide-react';
 import { Repository } from '../types';
 import { gitHubSync, BelentaniProfileState, DoctorFixDiagnostic } from '../services/githubSync';
-import { DoctorFixGenerator, GeneratedFixFile } from '../services/doctorFix';
+import { DoctorFixPreview as DoctorFixGenerator, type GeneratedPreview } from '../services/doctorFixPreviews';
 import { appleHaptics } from '../utils/appleHaptics';
 
 interface DoctorFixModalProps {
@@ -68,12 +68,12 @@ export const DoctorFixModal: React.FC<DoctorFixModalProps> = ({
     if (filterMode === 'webs-only') return !!r.liveUrl;
     if (filterMode === 'needs-attention') {
       const diag = syncState.diagnostics[r.id];
-      return diag && diag.healthScore < 85;
+      return Boolean(diag && (diag.severity === 'warning' || diag.severity === 'error'));
     }
     return true;
   });
 
-  const getFileForCurrentRepo = (): GeneratedFixFile | { filename: string; language: string; description: string; content: string } => {
+  const getFileForCurrentRepo = (): GeneratedPreview => {
     if (!currentRepo) {
       return DoctorFixGenerator.generatePagesWorkflow('belentani-app');
     }
@@ -344,14 +344,14 @@ export const DoctorFixModal: React.FC<DoctorFixModalProps> = ({
                             {diag && (
                               <span
                                 className={`px-2 py-0.5 rounded-md text-[10px] font-bold border ${
-                                  diag.healthScore >= 85
+                                  diag.severity === 'info'
                                     ? 'bg-emerald-950/40 border-emerald-500/30 text-emerald-300'
-                                    : diag.healthScore >= 65
+                                    : diag.severity === 'warning'
                                     ? 'bg-amber-950/40 border-amber-500/30 text-amber-300'
                                     : 'bg-rose-950/40 border-rose-500/30 text-rose-300'
                                 }`}
                               >
-                                Salud: {diag.healthScore}%
+                                {diag.severity === 'info' ? 'Info' : diag.severity === 'warning' ? 'Revisar' : 'Error'} · {diag.code}
                               </span>
                             )}
                           </div>

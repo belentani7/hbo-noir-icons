@@ -52,6 +52,12 @@ export default function App() {
   // Global listener for backend CLI shortcut (backtick key ` or ~)
   useEffect(() => {
     const handleGlobalKeyDown = (e: KeyboardEvent) => {
+      const target = e.target;
+      const editing = target instanceof HTMLElement && (
+        target.isContentEditable || ['INPUT', 'TEXTAREA', 'SELECT'].includes(target.tagName)
+      );
+      // Do not hijack typing, assistive shortcuts or platform key combinations.
+      if (editing || e.ctrlKey || e.metaKey || e.altKey || e.repeat) return;
       if (e.key === '`' || e.key === '~') {
         e.preventDefault();
         setShowCliBackend((prev) => !prev);
@@ -90,6 +96,11 @@ export default function App() {
 
       {/* ─── 4. Active Experience Version Switcher ─── */}
       <div className="relative z-10 w-full h-full">
+        <div className="pointer-events-none fixed left-3 top-3 z-40 max-w-[min(390px,calc(100vw-24px))] rounded-xl border border-white/20 bg-black/70 px-3 py-2 text-[10px] font-mono leading-5 text-purple-100/90 backdrop-blur-md" role="status" aria-live="polite">
+          <span className="text-purple-300">CATÁLOGO · {syncState.catalogueSource === 'public-github' ? 'GITHUB PÚBLICO' : 'EDICIÓN LOCAL'}</span>
+          <span className="ml-2 text-neutral-300">{syncState.catalogueSource === 'public-github' ? `${syncState.repositories.length} fichas de la API pública` : 'Fichas editoriales, sin acceso a repos privados'}</span>
+          {syncState.lastError && <span className="block text-amber-200">{syncState.lastError}</span>}
+        </div>
         {viewVersion === 'cascade-3d' ? (
           <Cascade3DStream
             repositories={repositories}

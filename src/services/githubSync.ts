@@ -31,13 +31,17 @@ export interface BelentaniProfileState {
   avatarUrl: string;
   bio: string;
   publicReposCount: number;
-  /** Numero de repositorios con web publicada y viva. */
+  /** Repos con homepage declarada. No significa que la web esté viva. */
   activeWebsCount: number;
   repositories: Repository[];
   /** Diagnosticos indexados por id de repositorio. */
   diagnostics: Record<string, DoctorFixDiagnostic>;
   /** ISO 8601 de la ultima sincronizacion correcta; null si nunca hubo. */
   lastSyncTime: string | null;
+  /** Public GitHub API result vs. bundled editorial fallback (private repos are invisible). */
+  catalogueSource: 'public-github' | 'editorial-fallback';
+  /** A failed request must never count as a successful sync. */
+  lastError: string | null;
   isLoading: boolean;
 }
 
@@ -53,6 +57,8 @@ const EMPTY: BelentaniProfileState = {
   repositories: REPOSITORIES,
   diagnostics: {},
   lastSyncTime: null,
+  catalogueSource: 'editorial-fallback',
+  lastError: null,
   isLoading: false,
 };
 
@@ -171,14 +177,20 @@ class GitHubSync {
         bio: profile.bio ?? '',
         publicReposCount: profile.public_repos ?? mapped.length,
         activeWebsCount: mapped.filter((r) => !!r.liveUrl).length,
-        repositories: mapped,
+        repositories: mapped.length > 0 ? mapped : REPOSITORIES,
+        catalogueSource: mapped.length > 0 ? 'public-github' : 'editorial-fallback',
         diagnostics,
         lastSyncTime: new Date().toISOString(),
+        lastError: null,
         isLoading: false,
       });
     } catch {
-      // Se conserva el estado anterior: mejor dato viejo que pantalla vacia.
-      this.set({ isLoading: false });
+      // A blocked or rate-limited public GitHub request is not a successful sync.
+      // Do not erase useful editorial fallback and NEVER imply private repo access.
+      this.set({
+        isLoading: false,
+        lastError: 'No se pudo verificar el catálogo público con GitHub; los datos pueden ser editoriales o anteriores.',
+      });
     }
   }
 }
