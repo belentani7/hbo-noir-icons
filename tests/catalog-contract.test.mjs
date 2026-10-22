@@ -56,3 +56,13 @@ test("Doctor Fix offers reviewable previews, not broken generators or Github wri
   assert.match(previews,/workflow_dispatch/);
   assert.doesNotMatch(previews,/git push|gh repo delete|gh pr merge/);
 });
+
+test("product package is branded and clean never removes tracked source files", () => {
+  const manifest=JSON.parse(source("package.json"));
+  const lock=JSON.parse(source("package-lock.json"));
+  assert.equal(manifest.name,"belentani-noir-icons");
+  assert.equal(lock.name,manifest.name);
+  assert.equal(lock.packages[""].name,manifest.name);
+  assert.match(manifest.scripts.clean,/rmSync\('dist'/);
+  assert.doesNotMatch(manifest.scripts.clean,/rm\s+-rf|server\.js/);
+});
