@@ -16,7 +16,7 @@ export function publicHomepage(value) {
         host.endsWith(".localhost") || host.endsWith(".local") ||
         host.endsWith(".internal") || host.endsWith(".test") ||
         host.endsWith(".invalid") || host.endsWith(".example") ||
-        /^\\d+(?:\\.\\d+){3}$/.test(host) || host.startsWith("["))
+        /^\d+(?:\.\d+){3}$/.test(host) || host.startsWith("["))
       return undefined;
     // Preserve only normal web links, never script/data/file schemes or credentials.
     return parsed.href;
