@@ -66,3 +66,22 @@ test("product package is branded and clean never removes tracked source files", 
   assert.match(manifest.scripts.clean,/rmSync\('dist'/);
   assert.doesNotMatch(manifest.scripts.clean,/rm\s+-rf|server\.js/);
 });
+
+
+test("security and fix commands must not fabricate execution or compliance",()=>{
+  const cli=source("src/components/DevOpsCliBackend.tsx");
+  const forbidden=[
+    "FIPS 140-3 COMPLIANT",
+    "100% ACTIVO & VERIFICADO",
+    "VERIFICACIÓN CRIPTOGRÁFICA SHA-256 COMPLETADA",
+    "AUTO-FIX EJECUTADO CON ÉXITO",
+    "33 / 33 ARCHIVOS VERIFICADOS",
+    "Secret Scanning: 0 filtraciones",
+    "14 Repositorios Públicos Sincronizados y Blindados",
+  ];
+  for(const claim of forbidden) assert.ok(!cli.includes(claim),claim);
+  for(const text of ["NO VERIFICADO EN EL NAVEGADOR","No se ha calculado ningún hash",
+    "GUÍA DE CORRECCIÓN (NO EJECUTADA)","No se ejecutan comandos Linux"]) {
+    assert.ok(cli.includes(text),text);
+  }
+});
