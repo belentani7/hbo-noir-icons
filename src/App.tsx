@@ -52,6 +52,12 @@ export default function App() {
   // Global listener for backend CLI shortcut (backtick key ` or ~)
   useEffect(() => {
     const handleGlobalKeyDown = (e: KeyboardEvent) => {
+      const target = e.target;
+      const editing = target instanceof HTMLElement && (
+        target.isContentEditable || ['INPUT', 'TEXTAREA', 'SELECT'].includes(target.tagName)
+      );
+      // Do not hijack typing, assistive shortcuts or platform key combinations.
+      if (editing || e.ctrlKey || e.metaKey || e.altKey || e.repeat) return;
       if (e.key === '`' || e.key === '~') {
         e.preventDefault();
         setShowCliBackend((prev) => !prev);
