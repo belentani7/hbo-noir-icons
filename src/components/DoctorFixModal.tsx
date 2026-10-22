@@ -140,7 +140,7 @@ export const DoctorFixModal: React.FC<DoctorFixModalProps> = ({
                   </span>
                 </div>
                 <div className="text-[10px] text-purple-300/60">
-                  Explorador, auto-despliegue de webs y blindaje automático en GitHub
+                  Explorador público y borradores revisables · sin despliegues automáticos
                 </div>
               </div>
             </div>
