@@ -19,3 +19,13 @@ test("sync layer sanitizes remote homepage before any UI/catalog mapping", () =>
   assert.match(source,/import \{ publicHomepage \} from '.\/publicHomepage\.mjs';/);
   assert.match(source,/liveUrl: publicHomepage\(r\.homepage\)/);
 });
+
+test("untrusted homepage metadata blocks local networks, fragments, and insecure HTTP", () => {
+  for (const value of [
+    "https://127.0.0.1", "https://192.168.0.25/app",
+    "https://2130706433/", "https://[::1]/",
+    "https://router.local/", "https://metadata.google.internal",
+    "https://example.org/#private", "https://example.org:8443",
+    "http://example.org", "https://a.test",
+  ]) assert.equal(publicHomepage(value), undefined, value);
+});
