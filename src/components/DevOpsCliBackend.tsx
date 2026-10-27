@@ -424,7 +424,7 @@ export const DevOpsCliBackend: React.FC<DevOpsCliBackendProps> = ({
           onOpenArticle?.(found.id);
           outputNode = (
             <div className="text-xs font-mono text-cyan-300 pl-2 border-l border-cyan-500/40 my-1">
-              ✓ Abriendo artículo científico de luz líquida: <span className="text-white font-bold">{found.name}</span> ({found.liquidLight.scientificArticle.source}).
+              ✓ Abriendo artículo científico de luz líquida: <span className="text-white font-bold">{found.name}</span> ({found.liquidLight.scientificArticle?.source ?? "sin fuente científica declarada"}).
             </div>
           );
         } else {

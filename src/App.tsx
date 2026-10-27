@@ -127,6 +127,8 @@ export default function App() {
         ) : viewVersion === 'smartwatch-cascade' ? (
           <SmartWatchCascadeTV
             repositories={repositories}
+            lastSyncTime={syncState.lastSyncTime}
+            isSyncing={syncState.isLoading}
             lightingMode={lightingMode}
             onLightingChange={setLightingMode}
             onInspectIcon={(repo) => setSelectedRepoForModal(repo)}

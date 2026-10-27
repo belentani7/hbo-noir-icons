@@ -207,10 +207,10 @@ export const SwipeUpGlassDrawer: React.FC<SwipeUpGlassDrawerProps> = ({
                     )}
                   </div>
                   <div className="text-sm font-bold text-white font-sans">
-                    {repo.liquidLight.scientificArticle.title}
+                    {repo.liquidLight.scientificArticle?.title ?? "Sin referencia científica declarada"}
                   </div>
                   <p className="text-xs text-neutral-400 font-mono line-clamp-2">
-                    {repo.liquidLight.scientificArticle.excerpt}
+                    {repo.liquidLight.scientificArticle?.excerpt ?? "Efecto visual de luz líquida, sin paper documentado."}
                   </p>
                 </div>
 

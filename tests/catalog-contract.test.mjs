@@ -109,3 +109,19 @@ test("CLI security, kernel and harmony commands never claim checks they did not 
     "Catálogo visible de proyectos públicos o fichas editoriales",
   ]) assert.ok(cli.includes(disclosure), disclosure);
 });
+
+test("shared view contracts match real UI controls and unverified data stays honest", () => {
+  const types = source("src/types.ts");
+  const app = source("src/App.tsx");
+  const watch = source("src/components/SmartWatchCascadeTV.tsx");
+  const drawer = source("src/components/LiquidLightArticleDrawer.tsx");
+  const cli = source("src/components/DevOpsCliBackend.tsx");
+  for (const mode of ["wallet-stack", "cover-flow", "cylinder-crown", "smartwatch-cascade", "liquid-bloom", "hbo-noir"]) {
+    assert.ok(types.includes(mode), mode);
+  }
+  assert.match(app, /lastSyncTime=\{syncState\.lastSyncTime\}/);
+  assert.doesNotMatch(watch, /setAutoSyncCount|SYNC #\{autoSyncCount\}/);
+  assert.match(watch, /Catálogo sin verificar/);
+  assert.match(drawer, /SIN PAPER DOCUMENTADO/);
+  assert.match(cli, /sin fuente científica declarada/);
+});

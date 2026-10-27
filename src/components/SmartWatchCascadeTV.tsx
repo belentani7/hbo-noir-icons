@@ -29,6 +29,8 @@ import { SwipeUpGlassDrawer } from './SwipeUpGlassDrawer';
 
 interface SmartWatchCascadeTVProps {
   repositories: Repository[];
+  lastSyncTime?: string | null;
+  isSyncing?: boolean;
   lightingMode: LightingMode;
   onLightingChange: (mode: LightingMode) => void;
   onInspectIcon: (repo: Repository) => void;
@@ -41,6 +43,8 @@ interface SmartWatchCascadeTVProps {
 
 export const SmartWatchCascadeTV: React.FC<SmartWatchCascadeTVProps> = ({
   repositories,
+  lastSyncTime = null,
+  isSyncing = false,
   lightingMode,
   onLightingChange,
   onInspectIcon,
@@ -64,8 +68,6 @@ export const SmartWatchCascadeTV: React.FC<SmartWatchCascadeTVProps> = ({
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [crownRotation, setCrownRotation] = useState(0);
   const [isDraggingCrown, setIsDraggingCrown] = useState(false);
-  const [autoSyncTime, setAutoSyncTime] = useState(new Date().toLocaleTimeString());
-  const [autoSyncCount, setAutoSyncCount] = useState(214);
   const [isCopied, setIsCopied] = useState(false);
 
   // Pointer micro-distortion state for physics and real material response
@@ -81,14 +83,6 @@ export const SmartWatchCascadeTV: React.FC<SmartWatchCascadeTVProps> = ({
 
   const currentRepo = sortedRepos[currentIndex] || sortedRepos[0];
 
-  // Periodic automatic updates ticker (Backend auto-sync daemon simulation)
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setAutoSyncTime(new Date().toLocaleTimeString());
-      setAutoSyncCount((prev) => prev + 1);
-    }, 4200);
-    return () => clearInterval(timer);
-  }, []);
 
   // Navigation handlers with toroidal wrap
   const goToNext = () => {
@@ -214,7 +208,7 @@ export const SmartWatchCascadeTV: React.FC<SmartWatchCascadeTVProps> = ({
           {/* Auto-Update Pulse Indicator */}
           <div className="hidden sm:flex items-center gap-2 px-2.5 py-1 rounded-full bg-black/60 border border-purple-500/20 text-[11px] font-mono text-purple-300">
             <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping" />
-            <span>SYNC #{autoSyncCount} ({autoSyncTime})</span>
+            <span>{isSyncing ? "Consultando GitHub público…" : lastSyncTime ? `Última consulta: ${new Date(lastSyncTime).toLocaleTimeString()}` : "Catálogo sin verificar"}</span>
           </div>
         </div>
 
@@ -758,7 +752,7 @@ export const SmartWatchCascadeTV: React.FC<SmartWatchCascadeTVProps> = ({
                   >
                     <Atom className="w-3.5 h-3.5 text-purple-400 shrink-0" />
                     <span className="truncate">
-                      Paper: «{currentRepo.liquidLight.scientificArticle.title}»
+                      {currentRepo.liquidLight.scientificArticle?.title ? `Paper: «${currentRepo.liquidLight.scientificArticle.title}»` : "Ficha de luz líquida · sin paper documentado"}
                     </span>
                   </div>
                 </div>
