@@ -85,3 +85,27 @@ test("security and fix commands must not fabricate execution or compliance",()=>
     assert.ok(cli.includes(text),text);
   }
 });
+
+test("CLI security, kernel and harmony commands never claim checks they did not execute", () => {
+  const cli = source("src/components/DevOpsCliBackend.tsx");
+  for (const fabricated of [
+    "SISTEMA 100% SEGURO · SANDBOX TOTALMENTE AISLADO",
+    "Integridad verificada:",
+    "EVALUACIÓN DE ARMONÍA MATEMÁTICA: 100% CUMPLIMIENTO",
+    "Sandbox local blindado",
+    "Congestion control optimizado",
+    "Compresión lz4 in-RAM",
+    "Auditoría criptográfica de integridad SHA-256 en vivo",
+    "Corrección automática de permisos y saltos LF",
+    "Informe de seguridad de sandbox y cero riesgos",
+    "Catálogo de los 14 proyectos",
+  ]) assert.ok(!cli.includes(fabricated), fabricated);
+  for (const disclosure of [
+    "NO AUDITADO DESDE ESTA INTERFAZ",
+    "Ningún hash se ha calculado aquí",
+    "esta web no inspecciona el kernel",
+    "SIN EVALUACIÓN AUTOMÁTICA DE CUMPLIMIENTO",
+    "Guía de corrección manual; sin escritura de archivos",
+    "Catálogo visible de proyectos públicos o fichas editoriales",
+  ]) assert.ok(cli.includes(disclosure), disclosure);
+});
