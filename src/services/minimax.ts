@@ -1,3 +1,4 @@
+/// <reference types="vite/client" />
 /**
  * Puente con MiniMax para generar el brief de direccion de arte de un icono.
  *

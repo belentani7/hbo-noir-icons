@@ -11,6 +11,7 @@
  * quedarse en blanco por un fallo de red ajeno.
  */
 import { REPOSITORIES } from '../data/repositories';
+import { publicHomepage } from './publicHomepage.mjs';
 import type { Repository } from '../types';
 
 /** Diagnostico de un repositorio concreto. */
@@ -129,7 +130,7 @@ class GitHubSync {
         description: r.description ?? '',
         longDescription: r.description ?? '',
         githubUrl: r.html_url,
-        liveUrl: r.homepage || undefined,
+        liveUrl: publicHomepage(r.homepage),
         primaryLanguage: r.language ?? 'HTML',
         languageColor: '#8b8b8b',
         category: 'archive',

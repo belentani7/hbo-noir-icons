@@ -73,7 +73,7 @@ export interface LiquidLight {
   milkyGlow: number;
   refractiveIndex: number;
   /** Referencia o nota divulgativa que acompana al efecto. */
-  scientificArticle?: string;
+  scientificArticle?: { title: string; source: string; excerpt: string };
 }
 
 /** Un repositorio tal como lo presenta la experiencia. */
@@ -108,17 +108,22 @@ export type LightingMode =
   | 'ultra-noir-3'
   | 'noir-6'
   | 'noir-12'
-  | 'plasma-full';
+  | 'plasma-full'
+  | 'hbo-noir'
+  | 'liquid-bloom';
 
 /** Vistas principales de la aplicacion. */
 export type AppViewVersion =
   | 'cascade-3d'
   | 'smartwatch'
+  | 'smartwatch-cascade'
   | 'netflix'
   | 'zero-text';
 
 /** Modo de cascada de Apple (haptics + transiciones). */
-export type AppleCascadeMode = 'off' | 'subtle' | 'cinematic';
+export type AppleCascadeMode = 'wallet-stack' | 'cover-flow' | 'cylinder-crown';
+/** Presentation layout, not a connected hardware device. */
+export type DeviceExperience = 'tv' | 'smartwatch' | 'mobile' | 'desktop';
 /** Categoria de una regla del motor de restricciones de diseno. */
 export interface RuleCategory {
   /** Identificador corto usado como clave y en las comparaciones. */

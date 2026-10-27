@@ -66,3 +66,69 @@ test("product package is branded and clean never removes tracked source files", 
   assert.match(manifest.scripts.clean,/rmSync\('dist'/);
   assert.doesNotMatch(manifest.scripts.clean,/rm\s+-rf|server\.js/);
 });
+
+
+test("security and fix commands must not fabricate execution or compliance",()=>{
+  const cli=source("src/components/DevOpsCliBackend.tsx");
+  const forbidden=[
+    "FIPS 140-3 COMPLIANT",
+    "100% ACTIVO & VERIFICADO",
+    "VERIFICACIÓN CRIPTOGRÁFICA SHA-256 COMPLETADA",
+    "AUTO-FIX EJECUTADO CON ÉXITO",
+    "33 / 33 ARCHIVOS VERIFICADOS",
+    "Secret Scanning: 0 filtraciones",
+    "14 Repositorios Públicos Sincronizados y Blindados",
+  ];
+  for(const claim of forbidden) assert.ok(!cli.includes(claim),claim);
+  for(const text of ["NO VERIFICADO EN EL NAVEGADOR","No se ha calculado ningún hash",
+    "GUÍA DE CORRECCIÓN (NO EJECUTADA)","No se ejecutan comandos Linux"]) {
+    assert.ok(cli.includes(text),text);
+  }
+});
+
+test("CLI security, kernel and harmony commands never claim checks they did not execute", () => {
+  const cli = source("src/components/DevOpsCliBackend.tsx");
+  for (const fabricated of [
+    "SISTEMA 100% SEGURO · SANDBOX TOTALMENTE AISLADO",
+    "Integridad verificada:",
+    "EVALUACIÓN DE ARMONÍA MATEMÁTICA: 100% CUMPLIMIENTO",
+    "Sandbox local blindado",
+    "Congestion control optimizado",
+    "Compresión lz4 in-RAM",
+    "Auditoría criptográfica de integridad SHA-256 en vivo",
+    "Corrección automática de permisos y saltos LF",
+    "Informe de seguridad de sandbox y cero riesgos",
+    "Catálogo de los 14 proyectos",
+  ]) assert.ok(!cli.includes(fabricated), fabricated);
+  for (const disclosure of [
+    "NO AUDITADO DESDE ESTA INTERFAZ",
+    "Ningún hash se ha calculado aquí",
+    "esta web no inspecciona el kernel",
+    "SIN EVALUACIÓN AUTOMÁTICA DE CUMPLIMIENTO",
+    "Guía de corrección manual; sin escritura de archivos",
+    "Catálogo visible de proyectos públicos o fichas editoriales",
+  ]) assert.ok(cli.includes(disclosure), disclosure);
+});
+
+test("shared view contracts match real UI controls and unverified data stays honest", () => {
+  const types = source("src/types.ts");
+  const app = source("src/App.tsx");
+  const watch = source("src/components/SmartWatchCascadeTV.tsx");
+  const drawer = source("src/components/LiquidLightArticleDrawer.tsx");
+  const cli = source("src/components/DevOpsCliBackend.tsx");
+  for (const mode of ["wallet-stack", "cover-flow", "cylinder-crown", "smartwatch-cascade", "liquid-bloom", "hbo-noir"]) {
+    assert.ok(types.includes(mode), mode);
+  }
+  assert.match(app, /lastSyncTime=\{syncState\.lastSyncTime\}/);
+  assert.doesNotMatch(watch, /setAutoSyncCount|SYNC #\{autoSyncCount\}/);
+  assert.match(watch, /Catálogo sin verificar/);
+  assert.match(drawer, /SIN PAPER DOCUMENTADO/);
+  assert.match(cli, /sin fuente científica declarada/);
+});
+
+test("scene harmony handles every lighting mode used by the UI", () => {
+  const engine = source("src/engine/designConstraintEngine.ts");
+  for (const mode of ["ultra-noir-3", "noir-6", "noir-12", "hbo-noir", "liquid-bloom", "plasma-full"]) {
+    assert.ok(engine.includes("'" + mode + "':"), mode);
+  }
+});

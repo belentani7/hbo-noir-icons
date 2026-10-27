@@ -14,6 +14,10 @@ La aplicación contiene:
 
 La etiqueta **homepage declarada** no equivale a una web desplegada y operativa. El contador de repositorios que informa GitHub públicamente puede incluir más proyectos que los de la primera página de resultados del cliente. No extrapolar el catálogo local a 500 repositorios privados.
 
+## Estado de comandos visuales — octubre 2026
+
+La consola `shield`, `verify`, `manifest` y `fix` es una experiencia guiada **sin acceso al árbol de archivos ni ejecución de comandos del sistema**. Ahora muestra acciones pendientes y referencias, nunca certificaciones FIPS, hallazgos SAST, SHA-256 verificados o correcciones efectivamente aplicadas. Para obtener resultados reales hay que ejecutar los scripts desde un entorno autorizado y comprobar el informe generado. Ningún archivo original de los modos audiovisuales se ha eliminado.
+
 ## Ejecutar
 
     npm ci --no-audit --no-fund

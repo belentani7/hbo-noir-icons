@@ -195,29 +195,29 @@ export const DevOpsCliBackend: React.FC<DevOpsCliBackendProps> = ({
         <div className="space-y-2.5 text-xs font-mono text-purple-200 pl-2 border-l border-purple-400/50 my-2">
           <div className="text-purple-300 font-bold flex items-center gap-2 text-sm">
             <ShieldCheck className="w-4 h-4 text-emerald-400" />
-            <span>BLINDAJE SUPREMO REAL · PHALANX SHIELD v5.0.2 [HARDENED]</span>
+            <span>PHALANX SHIELD · REFERENCIA DE VERIFICACIÓN LOCAL</span>
           </div>
           <div className="p-3 rounded-lg bg-black/80 border border-purple-500/30 space-y-2 text-[11px] text-neutral-300">
             <div className="flex items-center justify-between border-b border-white/10 pb-1.5">
-              <span className="text-white font-bold">ESTADO DE BLINDAJE: 100% ACTIVO & VERIFICADO</span>
-              <span className="px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 text-[10px] font-bold border border-emerald-500/40">FIPS 140-3 COMPLIANT</span>
+              <span className="text-white font-bold">ESTADO: NO VERIFICADO EN EL NAVEGADOR</span>
+              <span className="px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 text-[10px] font-bold border border-emerald-500/40">SIN CERTIFICACIÓN FIPS VERIFICADA</span>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-[10px]">
               <div className="flex items-center gap-1.5 text-emerald-300">
                 <CheckCircle2 className="w-3.5 h-3.5 shrink-0" />
-                <span>Secret Scanning: 0 filtraciones en archivos</span>
+                <span>Escaneo de secretos: pendiente de ejecutar externamente</span>
               </div>
               <div className="flex items-center gap-1.5 text-emerald-300">
                 <CheckCircle2 className="w-3.5 h-3.5 shrink-0" />
-                <span>SAST Ligero: 0 inyecciones de código</span>
+                <span>Análisis estático: pendiente de ejecutar externamente</span>
               </div>
               <div className="flex items-center gap-1.5 text-emerald-300">
                 <CheckCircle2 className="w-3.5 h-3.5 shrink-0" />
-                <span>Auditoría CVE: Dependencias blindadas</span>
+                <span>Revisión CVE: no ejecutada en esta interfaz</span>
               </div>
               <div className="flex items-center gap-1.5 text-emerald-300">
                 <CheckCircle2 className="w-3.5 h-3.5 shrink-0" />
-                <span>SHA-256 Manifest: .noiacore_manifest.json</span>
+                <span>Manifiesto de referencia: .noiacore_manifest.json</span>
               </div>
             </div>
             <div className="pt-2 border-t border-white/10 flex flex-wrap items-center justify-between gap-2">
@@ -243,12 +243,12 @@ export const DevOpsCliBackend: React.FC<DevOpsCliBackendProps> = ({
         <div className="space-y-2 text-xs font-mono text-emerald-300 pl-2 border-l border-emerald-500/40 my-2">
           <div className="text-emerald-400 font-bold flex items-center gap-2">
             <CheckCircle2 className="w-4 h-4 text-emerald-400" />
-            <span>VERIFICACIÓN CRIPTOGRÁFICA SHA-256 COMPLETADA</span>
+            <span>VERIFICACIÓN SHA-256 · REQUIERE EJECUCIÓN LOCAL</span>
           </div>
           <div className="p-3 rounded-lg bg-black/70 border border-emerald-500/20 text-[11px] text-neutral-300 space-y-1">
-            <div>✓ Escaneando 33 archivos del proyecto contra manifiesto...</div>
-            <div className="text-emerald-400 font-bold">✓ 33 / 33 ARCHIVOS VERIFICADOS CON ÉXITO [INTEGRIDAD 100%]</div>
-            <div className="text-neutral-400 text-[10px]">Cero mutaciones no autorizadas, cero inyecciones de dependencias.</div>
+            <div>Esta consola no accede al árbol local del repositorio.</div>
+            <div className="text-emerald-400 font-bold">No se ha calculado ningún hash en esta sesión.</div>
+            <div className="text-neutral-400 text-[10px]">Ejecuta y revisa el resultado del verificador desde un entorno autorizado.</div>
           </div>
         </div>
       );
@@ -260,16 +260,16 @@ export const DevOpsCliBackend: React.FC<DevOpsCliBackendProps> = ({
         <div className="space-y-2 text-xs font-mono text-purple-200 pl-2 border-l border-emerald-500/40 my-2">
           <div className="text-emerald-400 font-bold flex items-center gap-2">
             <FileCode className="w-4 h-4 text-emerald-400" />
-            <span>MANIFIESTO CRIPTOGRÁFICO DE INTEGRIDAD (.noiacore_manifest.json)</span>
+            <span>MANIFIESTO DE REFERENCIA (.noiacore_manifest.json)</span>
           </div>
           <div className="p-2.5 rounded-lg bg-black/70 border border-emerald-500/20 text-[10px] text-neutral-300 space-y-1 font-mono">
-            <div className="text-neutral-400"># Algoritmo: SHA-256 · Verificación de Integridad en Frío</div>
-            <div>src/App.tsx: <span className="text-emerald-400">sha256:7f4c9...verified</span></div>
-            <div>src/components/Cascade3DStream.tsx: <span className="text-emerald-400">sha256:a18e2...verified</span></div>
-            <div>src/components/DevOpsCliBackend.tsx: <span className="text-emerald-400">sha256:b891d...verified</span></div>
-            <div>src/utils/appleHaptics.ts: <span className="text-emerald-400">sha256:92e1a...verified</span></div>
-            <div>phalanx_shield.py: <span className="text-emerald-400">sha256:f0293...verified</span></div>
-            <div className="text-emerald-300 font-bold pt-1">✓ 33 archivos en el manifiesto oficial. Cero fallos de hash.</div>
+            <div className="text-neutral-400"># Formato: SHA-256 · Este panel NO ejecuta la comparación.</div>
+            <div>src/App.tsx: <span className="text-emerald-400">hash no comprobado</span></div>
+            <div>src/components/Cascade3DStream.tsx: <span className="text-emerald-400">hash no comprobado</span></div>
+            <div>src/components/DevOpsCliBackend.tsx: <span className="text-emerald-400">hash no comprobado</span></div>
+            <div>src/utils/appleHaptics.ts: <span className="text-emerald-400">hash no comprobado</span></div>
+            <div>phalanx_shield.py: <span className="text-emerald-400">hash no comprobado</span></div>
+            <div className="text-emerald-300 font-bold pt-1">Revisa el manifiesto real y ejecuta las comprobaciones externamente.</div>
           </div>
         </div>
       );
@@ -282,12 +282,12 @@ export const DevOpsCliBackend: React.FC<DevOpsCliBackendProps> = ({
         <div className="space-y-2 text-xs font-mono text-emerald-300 pl-2 border-l border-emerald-500/40 my-2">
           <div className="text-emerald-400 font-bold flex items-center gap-2">
             <CheckCircle2 className="w-4 h-4 text-emerald-400" />
-            <span>PHALANX AUTO-FIX EJECUTADO CON ÉXITO</span>
+            <span>PHALANX · GUÍA DE CORRECCIÓN (NO EJECUTADA)</span>
           </div>
           <div className="p-2.5 rounded-lg bg-black/70 border border-emerald-500/20 text-[11px] text-neutral-300 space-y-1 font-mono">
-            <div>✓ Normalización de saltos de línea LF en todos los archivos.</div>
-            <div>✓ Sanitización de caracteres invisibles y BOM UTF-8.</div>
-            <div>✓ Permisos 644/755 asegurados en el entorno de ejecución.</div>
+            <div>Sugerencia: revisar y normalizar saltos de línea LF.</div>
+            <div>Sugerencia: comprobar BOM UTF-8 y caracteres invisibles.</div>
+            <div>Sugerencia: revisar permisos en el sistema autorizado.</div>
           </div>
         </div>
       );
@@ -302,8 +302,8 @@ export const DevOpsCliBackend: React.FC<DevOpsCliBackendProps> = ({
             <span>OPENCODE / MODO DESARROLLADOR SEGURO</span>
           </div>
           <div className="p-3 rounded-lg bg-black/60 border border-purple-500/20 space-y-1.5 text-[11px] text-neutral-300">
-            <div>✓ <span className="text-emerald-400 font-bold">Sandbox local activo:</span> Todo el código se ejecuta en memoria protegida.</div>
-            <div>✓ <span className="text-white font-bold">Código fuente de los 14 proyectos:</span> Disponible en el perfil oficial de GitHub:</div>
+            <div>✓ <span className="text-emerald-400 font-bold">Terminal visual sin sandbox real:</span> No se ejecutan comandos Linux ni código de repositorios desde el navegador.</div>
+            <div>✓ <span className="text-white font-bold">Código público que GitHub permita consultar:</span> Disponible en el perfil oficial de GitHub:</div>
             <div className="text-purple-300 font-bold pl-3">
               <a href="https://github.com/belentani7" target="_blank" rel="noreferrer" className="underline hover:text-white">
                 → https://github.com/belentani7
@@ -324,9 +324,9 @@ export const DevOpsCliBackend: React.FC<DevOpsCliBackendProps> = ({
             <span>LINUX-POWER KERNEL TUNING & ORCHESTRATION</span>
           </div>
           <div className="p-3 rounded-lg bg-black/70 border border-yellow-500/20 space-y-1.5 text-[11px] text-neutral-300 font-mono">
-            <div>• <span className="text-yellow-300 font-bold">Aislamiento Cgroups:</span> Sandbox local blindado y espacio de usuario no-root.</div>
-            <div>• <span className="text-yellow-300 font-bold">TCP BBRv3:</span> Congestion control optimizado para streaming WebGL de baja latencia.</div>
-            <div>• <span className="text-yellow-300 font-bold">ZRAM Swap:</span> Compresión lz4 in-RAM para estabilidad absoluta en hardware modesto.</div>
+            <div>• <span className="text-yellow-300 font-bold">Cgroups:</span> Consulta pendiente en un equipo Linux autorizado; esta web no inspecciona el kernel.</div>
+            <div>• <span className="text-yellow-300 font-bold">TCP BBR:</span> Configuración no comprobada; requiere consultar el sistema operativo.</div>
+            <div>• <span className="text-yellow-300 font-bold">ZRAM:</span> Estado no comprobado; el navegador no puede habilitar ni medir swap.</div>
             <div>• <span className="text-yellow-300 font-bold">Repositorio:</span> github.com/belentani7/linux-power (GPL-3.0)</div>
           </div>
         </div>
@@ -343,8 +343,8 @@ export const DevOpsCliBackend: React.FC<DevOpsCliBackendProps> = ({
           </div>
           <div className="p-3 rounded-lg bg-black/70 border border-purple-500/20 space-y-1.5 text-[11px] text-neutral-300 font-mono">
             <div>✓ Perfil Oficial: <a href="https://github.com/belentani7" target="_blank" rel="noreferrer" className="text-purple-300 underline font-bold">github.com/belentani7</a></div>
-            <div>✓ 14 Repositorios Públicos Sincronizados y Blindados.</div>
-            <div>✓ Manifiesto SHA-256 verificado por Phalanx Shield.</div>
+            <div>El catálogo público depende de la respuesta real de GitHub.</div>
+            <div>No se ha verificado ningún manifiesto desde esta consola.</div>
           </div>
         </div>
       );
@@ -424,7 +424,7 @@ export const DevOpsCliBackend: React.FC<DevOpsCliBackendProps> = ({
           onOpenArticle?.(found.id);
           outputNode = (
             <div className="text-xs font-mono text-cyan-300 pl-2 border-l border-cyan-500/40 my-1">
-              ✓ Abriendo artículo científico de luz líquida: <span className="text-white font-bold">{found.name}</span> ({found.liquidLight.scientificArticle.source}).
+              ✓ Abriendo artículo científico de luz líquida: <span className="text-white font-bold">{found.name}</span> ({found.liquidLight.scientificArticle?.source ?? "sin fuente científica declarada"}).
             </div>
           );
         } else {
@@ -543,7 +543,7 @@ export const DevOpsCliBackend: React.FC<DevOpsCliBackendProps> = ({
       onOpenHarmonia?.();
       outputNode = (
         <div className="text-xs font-mono text-emerald-300 pl-2 border-l border-emerald-500/40 my-2">
-          <div className="text-emerald-400 font-bold">EVALUACIÓN DE ARMONÍA MATEMÁTICA: 100% CUMPLIMIENTO</div>
+          <div className="text-emerald-400 font-bold">ARMONÍA VISUAL · SIN EVALUACIÓN AUTOMÁTICA DE CUMPLIMIENTO</div>
           <div className="text-[11px] text-neutral-300 mt-1">
             Modal de Escaparatismo y Relaciones Áureas abierto.
           </div>
@@ -629,12 +629,12 @@ export const DevOpsCliBackend: React.FC<DevOpsCliBackendProps> = ({
         <div className="space-y-2 text-xs font-mono text-emerald-300 pl-2 border-l border-emerald-500/40 my-2">
           <div className="text-emerald-400 font-bold flex items-center gap-2 text-sm">
             <ShieldCheck className="w-4 h-4 text-emerald-400" />
-            <span>SISTEMA 100% SEGURO · SANDBOX TOTALMENTE AISLADO</span>
+            <span>ESTADO DE SEGURIDAD · NO AUDITADO DESDE ESTA INTERFAZ</span>
           </div>
           <div className="p-3 rounded-lg bg-emerald-950/20 border border-emerald-500/20 space-y-1.5 text-[11px] text-neutral-300">
             <div>• <span className="text-white font-bold">Simulación visual (Escaparate):</span> Consola interactiva para el showroom digital.</div>
-            <div>• <span className="text-white font-bold">Cero acceso local:</span> Corre en la memoria aislada del navegador.</div>
-            <div>• <span className="text-white font-bold">Integridad verificada:</span> Script Phalanx Shield audita todos los archivos con SHA-256.</div>
+            <div>• <span className="text-white font-bold">Alcance:</span> Esta consola no ejecuta comandos del sistema ni inspecciona archivos locales.</div>
+            <div>• <span className="text-white font-bold">Integridad:</span> Ningún hash se ha calculado aquí; el script requiere ejecución y revisión externas.</div>
           </div>
         </div>
       );
@@ -857,17 +857,17 @@ export const DevOpsCliBackend: React.FC<DevOpsCliBackendProps> = ({
 
           <div className="space-y-1 bg-black/60 p-2.5 rounded-lg border border-purple-500/20 text-[11px]">
             <div className="text-white font-bold border-b border-white/10 pb-1 text-emerald-300">✦ SEGURIDAD Y BLINDAJE PHALANX:</div>
-            <div>• <span className="text-white font-bold">shield</span> : Panel oficial del blindaje Phalanx Shield v5.0.2.</div>
-            <div>• <span className="text-white font-bold">verify</span> : Auditoría criptográfica de integridad SHA-256 en vivo.</div>
-            <div>• <span className="text-white font-bold">manifest</span> : Ver manifiesto de hashes de los 33 archivos.</div>
-            <div>• <span className="text-white font-bold">fix</span> : Corrección automática de permisos y saltos LF.</div>
+            <div>• <span className="text-white font-bold">shield</span> : Referencia al script Phalanx; no acredita blindaje ejecutado.</div>
+            <div>• <span className="text-white font-bold">verify</span> : Guía para verificar hashes externamente; no se ejecuta aquí.</div>
+            <div>• <span className="text-white font-bold">manifest</span> : Ver ejemplo de manifiesto; hashes no comprobados.</div>
+            <div>• <span className="text-white font-bold">fix</span> : Guía de corrección manual; sin escritura de archivos.</div>
             <div>• <span className="text-white font-bold">download</span> : Descargar el script autónomo <code className="text-white">phalanx_shield.py</code>.</div>
-            <div>• <span className="text-white font-bold">security</span> : Informe de seguridad de sandbox y cero riesgos.</div>
+            <div>• <span className="text-white font-bold">security</span> : Información de seguridad sin auditoría ni garantía de ausencia de riesgos.</div>
           </div>
 
           <div className="space-y-1 bg-black/60 p-2.5 rounded-lg border border-purple-500/20 text-[11px]">
             <div className="text-white font-bold border-b border-white/10 pb-1 text-amber-300">✦ NAVEGACIÓN Y REPOSITORIOS:</div>
-            <div>• <span className="text-white font-bold">repos</span> : Catálogo de los 14 proyectos con su color de luz líquida.</div>
+            <div>• <span className="text-white font-bold">repos</span> : Catálogo visible de proyectos públicos o fichas editoriales.</div>
             <div>• <span className="text-white font-bold">open &lt;id&gt;</span> : Enfocar y abrir cualquier proyecto en la Cascada 3D.</div>
             <div>• <span className="text-white font-bold">inspect &lt;id&gt;</span> : Abrir el Icon Studio 4K del proyecto.</div>
             <div>• <span className="text-white font-bold">article &lt;id&gt;</span> : Ver artículo científico de luz líquida asociado.</div>

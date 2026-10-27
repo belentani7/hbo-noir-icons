@@ -48,7 +48,7 @@ export const LiquidLightArticleDrawer: React.FC<LiquidLightArticleDrawerProps> =
                   FÍSICA FOTÓNICA & LUZ LÍQUIDA
                 </span>
                 <span className="font-mono text-[10px] font-bold text-emerald-400 bg-emerald-950/70 px-2 py-0.5 rounded border border-emerald-500/30">
-                  3% LUX CALIBRADO
+                  EFECTO VISUAL 3%
                 </span>
               </div>
               <h2 className="text-xl font-black text-white mt-0.5">
@@ -74,7 +74,7 @@ export const LiquidLightArticleDrawer: React.FC<LiquidLightArticleDrawerProps> =
           >
             <div className="flex items-center justify-between">
               <span className="font-mono text-xs uppercase tracking-widest text-purple-400/90 font-bold">
-                DOCUMENTO CIENTÍFICO REFERENCIADO
+                {liquidLight.scientificArticle ? "REFERENCIA CIENTÍFICA DECLARADA" : "SIN PAPER DOCUMENTADO"}
               </span>
               <span className="font-mono text-[11px] text-neutral-400">
                 Índice de Refracción: <strong>n = {liquidLight.refractiveIndex}</strong>
@@ -82,16 +82,16 @@ export const LiquidLightArticleDrawer: React.FC<LiquidLightArticleDrawerProps> =
             </div>
 
             <h3 className="text-base sm:text-lg font-bold text-white leading-snug">
-              «{liquidLight.scientificArticle.title}»
+              {liquidLight.scientificArticle?.title ?? "No hay título científico declarado para este proyecto"}
             </h3>
 
             <div className="text-xs font-mono text-purple-300/80 flex items-center gap-2">
               <BookOpen className="w-3.5 h-3.5 text-purple-400" />
-              <span>{liquidLight.scientificArticle.source}</span>
+              <span>{liquidLight.scientificArticle?.source ?? "Fuente no declarada"}</span>
             </div>
 
             <div className="p-3.5 rounded-xl bg-purple-950/20 border border-purple-500/20 text-xs sm:text-sm text-purple-100/90 leading-relaxed font-sans">
-              {liquidLight.scientificArticle.excerpt}
+              {liquidLight.scientificArticle?.excerpt ?? "Esta ficha describe un efecto visual; no acredita una publicación científica."}
             </div>
           </div>
 
