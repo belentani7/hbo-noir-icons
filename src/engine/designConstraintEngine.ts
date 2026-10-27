@@ -142,6 +142,8 @@ export function evaluateSceneHarmony(
     'ultra-noir-3': 0.03,
     'noir-6': 0.06,
     'noir-12': 0.12,
+    'hbo-noir': 0.16,
+    'liquid-bloom': 0.3,
     'plasma-full': 1,
   };
   const weight = lightWeight[lighting] ?? 0.03;

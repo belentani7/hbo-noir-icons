@@ -125,3 +125,10 @@ test("shared view contracts match real UI controls and unverified data stays hon
   assert.match(drawer, /SIN PAPER DOCUMENTADO/);
   assert.match(cli, /sin fuente científica declarada/);
 });
+
+test("scene harmony handles every lighting mode used by the UI", () => {
+  const engine = source("src/engine/designConstraintEngine.ts");
+  for (const mode of ["ultra-noir-3", "noir-6", "noir-12", "hbo-noir", "liquid-bloom", "plasma-full"]) {
+    assert.ok(engine.includes("'" + mode + "':"), mode);
+  }
+});
