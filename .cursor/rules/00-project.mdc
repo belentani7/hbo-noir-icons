@@ -1,0 +1,35 @@
+---
+description: Contexto, stack y convenciones base del proyecto
+globs: ["**/*"]
+alwaysApply: true
+---
+
+# Proyecto: belentani7__hbo-noir-icons
+
+Stack detectado: ci, frontend, node, python, react, server-node, tailwind, tests, typescript, vite.
+Gestores de paquetes: npm, pnpm.
+Tests: pytest.
+
+## Protocolo
+
+1. Spec-first: PRD → SRS → Design Doc → ADR → Plan → tests GWT.
+2. Cambios pequeños, reversibles y con verificación real.
+3. Conventional commits: `type(scope): summary`.
+4. No commitear secretos ni credenciales.
+5. No ejecutar TypeScript sin compilar en producción.
+
+## Comandos
+
+- `dev`: `vite --port=3000 --host=0.0.0.0`
+- `build`: `vite build`
+- `preview`: `vite preview`
+- `clean`: `node -e "require('node:fs').rmSync('dist',{recursive:true,force:true})"`
+- `lint`: `tsc --noEmit`
+- `test`: `node --test tests/catalog-contract.test.mjs`
+- `verify`: `npm run test && npm run lint && npm run build`
+
+## Verificación mínima
+
+- Tests del stack en verde.
+- Build reproducible.
+- `gitleaks detect --source . --redact` limpio.
