@@ -1,3 +1,4 @@
+import HeroShader from './components/HeroShader';
 import React, { useState, useEffect } from 'react';
 import { REPOSITORIES } from './data/repositories';
 import { Repository, LightingMode, AppViewVersion, AppleCascadeMode } from './types';
