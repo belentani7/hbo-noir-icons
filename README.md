@@ -48,3 +48,7 @@ La CI ejecuta el contrato de procedencia, pruebas de no falsificación de teleme
     docs/ORIGEN-AI-STUDIO.md        README inicial conservado
 
 **Estado de la rama:** candidato a validación; no se considera publicado hasta comprobar pruebas, navegación real de modos y el host. Ninguna otra aplicación de BELENTANI se ha fusionado o eliminado.
+
+
+## Producto
+Véase `plataforma/OFERTA.md`, `plataforma/precios.json`, `plataforma/ONEPAGER.md`.
