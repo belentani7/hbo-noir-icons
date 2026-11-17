@@ -52,3 +52,10 @@ La CI ejecuta el contrato de procedencia, pruebas de no falsificación de teleme
 
 ## Producto
 Véase `plataforma/OFERTA.md`, `plataforma/precios.json`, `plataforma/ONEPAGER.md`.
+
+## Verificacion
+
+```bash
+npm install
+npm test
+```
